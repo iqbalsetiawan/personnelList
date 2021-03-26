@@ -75,17 +75,22 @@ class PersonnelList extends React.Component {
     };
   }
 
+  // this code will run after user landed on this page
   componentDidMount() {
     const dataLocal = window.localStorage.getItem("userData");
+    // if user landed for the first time, use data from the API
     if (dataLocal === null) {
       this.populateData();
     } else {
+      // if user reloading the data, we'll user the data from localStorage
+      // to prevent refreshing the data when the page is reloaded
       this.setState({
         userData: JSON.parse(dataLocal),
       });
     }
   }
 
+  // get data from API
   populateData = () => {
     this.setState({ isFetching: true });
     axios
@@ -108,6 +113,7 @@ class PersonnelList extends React.Component {
       });
   };
 
+  // function to search based on first name
   handleChange = (event) => {
     const dataLocal = window.localStorage.getItem("userData");
     this.setState(
@@ -131,6 +137,7 @@ class PersonnelList extends React.Component {
     );
   };
 
+  // function to move to another page
   handleChangePaginationPage = (event, page) => {
     window.scrollTo(0, 0);
     this.setState({ page });
