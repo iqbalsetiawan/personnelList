@@ -13,6 +13,7 @@ import {
   Divider,
   TablePagination,
   CircularProgress,
+  Hidden,
 } from "@material-ui/core";
 import { Add, Search, MoreHoriz } from "@material-ui/icons";
 
@@ -33,8 +34,7 @@ const formatDate = (date) => {
 
 const styled = withStyles((theme) => ({
   root: {
-    flexGrow: 1,
-    padding: 20,
+    padding: theme.spacing(1),
   },
   paper: {
     padding: theme.spacing(2),
@@ -143,13 +143,22 @@ class PersonnelList extends React.Component {
       <div className={classes.root}>
         <Paper className={classes.paper}>
           <Grid container item xs={12}>
-            <Grid item xs={3}>
+            <Grid item xs={12} sm={6} md={3} lg={3} xl={3}>
               <Typography variant="h2" color="primary">
                 PERSONNEL LIST
               </Typography>
               <Typography variant="h2">List of all personnels</Typography>
             </Grid>
-            <Grid container item xs={9} justify="flex-end">
+            <Grid
+              container
+              item
+              xs={12}
+              sm={6}
+              md={9}
+              lg={9}
+              xl={9}
+              justify="flex-end"
+            >
               <TextField
                 value={searchData}
                 name="searchData"
@@ -179,7 +188,17 @@ class PersonnelList extends React.Component {
             userData
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map(($item, i) => (
-                <Grid key={i} container item xs={3} justify="center">
+                <Grid
+                  key={i}
+                  container
+                  item
+                  xs={12}
+                  sm={6}
+                  md={3}
+                  lg={3}
+                  xl={3}
+                  justify="center"
+                >
                   <Paper className={classes.paperUser}>
                     <Grid container item xs={12}>
                       <Grid item xs={11}>
@@ -199,16 +218,31 @@ class PersonnelList extends React.Component {
                       </Grid>
                     </Grid>
                     <Divider />
-                    <Grid item xs={12}>
-                      <Grid item xs={12} container justify="center">
-                        <img
-                          alt="Profile"
-                          src={$item.picture.thumbnail}
-                          className={classes.image}
-                        />
-                      </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={12}
+                      lg={12}
+                      xl={6}
+                      container
+                      justify="center"
+                    >
+                      <img
+                        alt="Profile"
+                        src={$item.picture.thumbnail}
+                        className={classes.image}
+                      />
                     </Grid>
-                    <Grid item xs={12} style={{ marginTop: 10 }}>
+                    <Grid
+                      item
+                      xs={6}
+                      sm={6}
+                      md={12}
+                      lg={12}
+                      xl={6}
+                      style={{ marginTop: 10 }}
+                    >
                       <Typography
                         style={{ fontWeight: "bold" }}
                         variant="subtitle2"
@@ -219,7 +253,7 @@ class PersonnelList extends React.Component {
                         {`${$item.name.title} ${$item.name.first} ${$item.name.last}`}
                       </Typography>
                     </Grid>
-                    <Grid item xs={12} style={{ marginTop: 10 }}>
+                    <Grid item xs={6} lg={12} style={{ marginTop: 10 }}>
                       <Typography
                         style={{ fontWeight: "bold" }}
                         variant="subtitle2"
@@ -230,28 +264,30 @@ class PersonnelList extends React.Component {
                         {$item.phone}
                       </Typography>
                     </Grid>
-                    <Grid item xs={12} style={{ marginTop: 10 }}>
-                      <Typography
-                        style={{ fontWeight: "bold" }}
-                        variant="subtitle2"
-                      >
-                        Birthday
-                      </Typography>
-                      <Typography variant="body2" component="span">
-                        {formatDate(new Date($item.dob.date))}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} style={{ marginTop: 10 }}>
-                      <Typography
-                        style={{ fontWeight: "bold" }}
-                        variant="subtitle2"
-                      >
-                        Email
-                      </Typography>
-                      <Typography variant="body2" component="span">
-                        {$item.email}
-                      </Typography>
-                    </Grid>
+                    <Hidden smDown>
+                      <Grid item xs={12} style={{ marginTop: 10 }}>
+                        <Typography
+                          style={{ fontWeight: "bold" }}
+                          variant="subtitle2"
+                        >
+                          Birthday
+                        </Typography>
+                        <Typography variant="body2" component="span">
+                          {formatDate(new Date($item.dob.date))}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12} style={{ marginTop: 10 }}>
+                        <Typography
+                          style={{ fontWeight: "bold" }}
+                          variant="subtitle2"
+                        >
+                          Email
+                        </Typography>
+                        <Typography variant="body2" component="span">
+                          {$item.email}
+                        </Typography>
+                      </Grid>
+                    </Hidden>
                   </Paper>
                 </Grid>
               ))
