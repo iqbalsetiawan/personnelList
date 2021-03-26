@@ -12,10 +12,13 @@ import {
   Button,
   Divider,
   TablePagination,
+  CircularProgress,
 } from "@material-ui/core";
 import { Add, Search, MoreHoriz } from "@material-ui/icons";
 
 import CustomTablePagination from "../CustomTablePagination";
+
+import NotFound from "../../Assets/NotFound.jpg";
 
 const formatWord = (word) =>
   word.length > 10 ? `${word.slice(0, 8)}...` : word;
@@ -168,7 +171,12 @@ class PersonnelList extends React.Component {
           </Grid>
         </Paper>
         <Grid container item xs={12}>
-          {userData
+          {isFetching ? (
+            <Grid container item xs={12} justify="center">
+              <CircularProgress size={40} />
+            </Grid>
+          ) : userData.length > 0 ? (
+            userData
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map(($item, i) => (
                 <Grid key={i} container item xs={3} justify="center">
@@ -246,9 +254,14 @@ class PersonnelList extends React.Component {
                     </Grid>
                   </Paper>
                 </Grid>
-            ))}
+              ))
+          ) : (
+            <Grid container item xs={12} justify="center">
+              <img alt="Not Found" src={NotFound} />
+            </Grid>
+          )}
           <Grid container item xs={12} justify="center">
-            {!isFetching && (
+            {!isFetching && userData.length > 0 && (
               <TablePagination
                 count={userData.length}
                 page={page}
