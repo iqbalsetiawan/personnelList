@@ -28,8 +28,6 @@ const formatDate = (date) => {
   return `${day} ${month} ${year}`;
 };
 
-const dataLocal = window.localStorage.getItem("userData");
-
 const styled = withStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -75,6 +73,7 @@ class PersonnelList extends React.Component {
   }
 
   componentDidMount() {
+    const dataLocal = window.localStorage.getItem("userData");
     if (dataLocal === null) {
       this.populateData();
     } else {
@@ -107,9 +106,26 @@ class PersonnelList extends React.Component {
   };
 
   handleChange = (event) => {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
+    const dataLocal = window.localStorage.getItem("userData");
+    this.setState(
+      {
+        [event.target.name]: event.target.value,
+      },
+      () => {
+        const fil = this.state.userData.filter((dt) =>
+          dt.name.first.toLowerCase().includes(event.target.value.toLowerCase())
+        );
+        if (event.target.value === "") {
+          this.setState({
+            userData: JSON.parse(dataLocal),
+          });
+        } else {
+          this.setState({
+            userData: fil,
+          });
+        }
+      }
+    );
   };
 
   handleChangePaginationPage = (event, page) => {
@@ -153,83 +169,83 @@ class PersonnelList extends React.Component {
         </Paper>
         <Grid container item xs={12}>
           {userData
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map(($item, i) => (
-              <Grid key={i} container item xs={3} justify="center">
-                <Paper className={classes.paperUser}>
-                  <Grid container item xs={12}>
-                    <Grid item xs={11}>
-                      Personnel ID:{" "}
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map(($item, i) => (
+                <Grid key={i} container item xs={3} justify="center">
+                  <Paper className={classes.paperUser}>
+                    <Grid container item xs={12}>
+                      <Grid item xs={11}>
+                        Personnel ID:{" "}
+                        <Typography
+                          variant="body2"
+                          color="primary"
+                          component="span"
+                        >
+                          {$item.id.value !== null
+                            ? formatWord($item.id.value)
+                            : "-"}
+                        </Typography>
+                      </Grid>
+                      <Grid container item xs={1} justify="flex-end">
+                        <MoreHoriz />
+                      </Grid>
+                    </Grid>
+                    <Divider />
+                    <Grid item xs={12}>
+                      <Grid item xs={12} container justify="center">
+                        <img
+                          alt="Profile"
+                          src={$item.picture.thumbnail}
+                          className={classes.image}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12} style={{ marginTop: 10 }}>
                       <Typography
-                        variant="body2"
-                        color="primary"
-                        component="span"
+                        style={{ fontWeight: "bold" }}
+                        variant="subtitle2"
                       >
-                        {$item.id.value !== null
-                          ? formatWord($item.id.value)
-                          : "-"}
+                        Name
+                      </Typography>
+                      <Typography variant="body2" component="span">
+                        {`${$item.name.title} ${$item.name.first} ${$item.name.last}`}
                       </Typography>
                     </Grid>
-                    <Grid container item xs={1} justify="flex-end">
-                      <MoreHoriz />
+                    <Grid item xs={12} style={{ marginTop: 10 }}>
+                      <Typography
+                        style={{ fontWeight: "bold" }}
+                        variant="subtitle2"
+                      >
+                        Telephone
+                      </Typography>
+                      <Typography variant="body2" component="span">
+                        {$item.phone}
+                      </Typography>
                     </Grid>
-                  </Grid>
-                  <Divider />
-                  <Grid item xs={12}>
-                    <Grid item xs={12} container justify="center">
-                      <img
-                        alt="Profile"
-                        src={$item.picture.thumbnail}
-                        className={classes.image}
-                      />
+                    <Grid item xs={12} style={{ marginTop: 10 }}>
+                      <Typography
+                        style={{ fontWeight: "bold" }}
+                        variant="subtitle2"
+                      >
+                        Birthday
+                      </Typography>
+                      <Typography variant="body2" component="span">
+                        {formatDate(new Date($item.dob.date))}
+                      </Typography>
                     </Grid>
-                  </Grid>
-                  <Grid item xs={12} style={{ marginTop: 10 }}>
-                    <Typography
-                      style={{ fontWeight: "bold" }}
-                      variant="subtitle2"
-                    >
-                      Name
-                    </Typography>
-                    <Typography variant="body2" component="span">
-                      {`${$item.name.title} ${$item.name.first} ${$item.name.last}`}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} style={{ marginTop: 10 }}>
-                    <Typography
-                      style={{ fontWeight: "bold" }}
-                      variant="subtitle2"
-                    >
-                      Telephone
-                    </Typography>
-                    <Typography variant="body2" component="span">
-                      {$item.phone}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} style={{ marginTop: 10 }}>
-                    <Typography
-                      style={{ fontWeight: "bold" }}
-                      variant="subtitle2"
-                    >
-                      Birthday
-                    </Typography>
-                    <Typography variant="body2" component="span">
-                      {formatDate(new Date($item.dob.date))}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} style={{ marginTop: 10 }}>
-                    <Typography
-                      style={{ fontWeight: "bold" }}
-                      variant="subtitle2"
-                    >
-                      Email
-                    </Typography>
-                    <Typography variant="body2" component="span">
-                      {$item.email}
-                    </Typography>
-                  </Grid>
-                </Paper>
-              </Grid>
+                    <Grid item xs={12} style={{ marginTop: 10 }}>
+                      <Typography
+                        style={{ fontWeight: "bold" }}
+                        variant="subtitle2"
+                      >
+                        Email
+                      </Typography>
+                      <Typography variant="body2" component="span">
+                        {$item.email}
+                      </Typography>
+                    </Grid>
+                  </Paper>
+                </Grid>
             ))}
           <Grid container item xs={12} justify="center">
             {!isFetching && (

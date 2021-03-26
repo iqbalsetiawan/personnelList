@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import { Home, Menu, People, Today } from "@material-ui/icons";
 
-import Gadjian from "../Assets/1.png";
+import Gadjian from "../Assets/Logo.png";
 import { NavLink } from "react-router-dom";
 
 const drawerWidth = 240;
