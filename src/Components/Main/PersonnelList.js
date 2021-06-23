@@ -209,7 +209,7 @@ class PersonnelList extends React.Component {
                     <Grid item xs={12} container justify="center">
                       <img
                         alt="Profile"
-                        src={$item.picture.thumbnail}
+                        src={$item.picture.large}
                         className={classes.image}
                       />
                     </Grid>
