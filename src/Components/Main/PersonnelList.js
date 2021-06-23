@@ -150,22 +150,13 @@ class PersonnelList extends React.Component {
       <div className={classes.root}>
         <Paper className={classes.paper}>
           <Grid container item xs={12}>
-            <Grid item xs={12} sm={6} md={3} lg={3} xl={3}>
+            <Grid item xs={12}>
               <Typography variant="h2" color="primary">
                 PERSONNEL LIST
               </Typography>
               <Typography variant="h2">List of all personnels</Typography>
             </Grid>
-            <Grid
-              container
-              item
-              xs={12}
-              sm={6}
-              md={9}
-              lg={9}
-              xl={9}
-              justify="flex-end"
-            >
+            <Grid container item xs={12} justify="flex-end">
               <TextField
                 value={searchData}
                 name="searchData"
@@ -195,17 +186,7 @@ class PersonnelList extends React.Component {
             userData
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map(($item, i) => (
-                <Grid
-                  key={i}
-                  container
-                  item
-                  xs={12}
-                  sm={6}
-                  md={3}
-                  lg={3}
-                  xl={3}
-                  justify="center"
-                >
+                <Grid key={i} container item xs={3} justify="center">
                   <Paper className={classes.paperUser}>
                     <Grid container item xs={12}>
                       <Grid item xs={11}>
@@ -225,31 +206,14 @@ class PersonnelList extends React.Component {
                       </Grid>
                     </Grid>
                     <Divider />
-                    <Grid
-                      item
-                      xs={12}
-                      sm={6}
-                      md={12}
-                      lg={12}
-                      xl={6}
-                      container
-                      justify="center"
-                    >
+                    <Grid item xs={12} container justify="center">
                       <img
                         alt="Profile"
                         src={$item.picture.thumbnail}
                         className={classes.image}
                       />
                     </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      sm={6}
-                      md={12}
-                      lg={12}
-                      xl={6}
-                      style={{ marginTop: 10 }}
-                    >
+                    <Grid item xs={6} style={{ marginTop: 10 }}>
                       <Typography
                         style={{ fontWeight: "bold" }}
                         variant="subtitle2"
